@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Скачивание YouTube Видео</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        .container {
+            max-width: 600px;
+            margin: auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        img {
+            display: block;
+            margin: 0 auto 20px;
+            max-width: 100%;
+            height: auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            width: 100%;
+            padding: 10px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #218838;
+        }
+        #message {
+            margin-top: 20px;
+            text-align: center;
+            color: #333;
+        }
+        .profile-link {
+            margin-top: 30px;
+            text-align: center;
+        }
+        .profile-link img {
+            max-width: 100px; /* Установите нужный размер */
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/4/42/YouTube_icon_%282013-2017%29.png" alt="YouTube Logo">
+        <h1>Скачивание YouTube Видео</h1>
+        <form id="downloadForm">
+            <label for="url">Введите ссылку на YouTube видео:</label>
+            <input type="text" id="url" name="url" required>
+            <button type="submit">Скачать</button>
+        </form>
+        <div id="message"></div>
+
+        <div class="profile-link">
+            <a href="https://t.me/DoSToN_M416" target="_blank">
+                <img src="https://i.postimg.cc/mD2XDF1Y/Persona-20230626-134620.jpg" alt="Telegram Profile">
+            </a>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('downloadForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const url = document.getElementById('url').value;
+            const response = await fetch('/download', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ url }),
+            });
+
+            const data = await response.json();
+            document.getElementById('message').innerText = data.message;
+
+            // Добавим обработку ошибок
+            if (!response.ok) {
+                document.getElementById('message').innerText = `Ошибка: ${data.message}`;
+            }
+        });
+    </script>
+</body>
+</html>
+
